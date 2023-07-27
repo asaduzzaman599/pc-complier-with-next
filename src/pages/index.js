@@ -1,6 +1,5 @@
-import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
-
+import RootLayouts from '@/layouts/RootLayouts';
+import Head from 'next/head';
 
 
 export default function HomePage() {
@@ -12,9 +11,15 @@ export default function HomePage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h1>This Home Page</h1>
-      </main>
+      <h1 style={{color:'black'}}>
+        This is Home Page
+      </h1>
     </>
+  );
+};
+
+HomePage.getLayout = function getLayout(page) {
+  return (
+    <RootLayouts>{page}</RootLayouts>
   )
 }
