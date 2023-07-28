@@ -1,8 +1,10 @@
-import React from 'react';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
+import { useRouter } from 'next/router';
 const { Meta } = Card;
-const Part = ({part}) => (
+const Part = ({part}) => { 
+    const router = useRouter()
+    return (
   <Card
     style={{
       width: 300,
@@ -16,7 +18,9 @@ const Part = ({part}) => (
     actions={[
       <SettingOutlined key="setting" />,
       <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
+      <EllipsisOutlined key="ellipsis" onClick={()=>router.push(
+        `/products/${part._id}`
+      )}/>,
     ]}
   >
     <Meta
@@ -25,5 +29,5 @@ const Part = ({part}) => (
       description="This is the description"
     />
   </Card>
-);
+);}
 export default Part;
