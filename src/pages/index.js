@@ -18,7 +18,7 @@ export default function HomePage({parts}) {
       <div>
         <ul>
           {
-            parts?.map((part)=><li key={part._id} style={{color:'black'}}>{part.Category}</li>)
+            parts?.map((part)=><li key={part._id} style={{color:'black'}} className='text-3xl'>{part.Category}</li>)
           }
         </ul>
       </div>
