@@ -1,9 +1,14 @@
+import Part from '@/components/Parts';
 import RootLayouts from '@/layouts/RootLayouts';
+import { Col, Row } from 'antd';
 import Head from 'next/head';
 
 
 export default function HomePage({parts}) {
-  console.log(parts)
+  const style = {
+    background: '#0092ff',
+    padding: '8px 0',
+  };
   return (
     <>
       <Head>
@@ -15,12 +20,14 @@ export default function HomePage({parts}) {
       <h1 style={{color:'black'}}>
         This is Home Page
       </h1>
-      <div>
-        <ul>
-          {
-            parts?.map((part)=><li key={part._id} style={{color:'black'}} className='text-3xl'>{part.Category}</li>)
+      <div className='container mx-auto grid grid-cols-3'>
+          
+             
+             {
+            parts?.map((part)=> <Col className="gutter-row" span={8} key={part._id}>
+               <Part part={part}></Part>
+             </Col>)
           }
-        </ul>
       </div>
     </>
   );
@@ -38,7 +45,7 @@ export async function getStaticProps() {
   const res = await fetch('http://localhost:3000/api/parts')
   const data = await res.json()
   
-  console.log(data.result)
+  console.log(data)
  
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
