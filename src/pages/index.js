@@ -2,7 +2,8 @@ import RootLayouts from '@/layouts/RootLayouts';
 import Head from 'next/head';
 
 
-export default function HomePage() {
+export default function HomePage({parts}) {
+  console.log(parts)
   return (
     <>
       <Head>
@@ -14,6 +15,13 @@ export default function HomePage() {
       <h1 style={{color:'black'}}>
         This is Home Page
       </h1>
+      <div>
+        <ul>
+          {
+            parts?.map((part)=><li key={part._id} style={{color:'black'}}>{part.Category}</li>)
+          }
+        </ul>
+      </div>
     </>
   );
 };
@@ -22,4 +30,21 @@ HomePage.getLayout = function getLayout(page) {
   return (
     <RootLayouts>{page}</RootLayouts>
   )
+}
+
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const res = await fetch('http://localhost:3000/api/parts')
+  const data = await res.json()
+  
+  console.log(data.result)
+ 
+  // By returning { props: { posts } }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      parts:data.result,
+    },
+  }
 }
