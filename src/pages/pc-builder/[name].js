@@ -1,14 +1,19 @@
 import Part from '@/components/Parts';
 import RootLayouts from '@/layouts/RootLayouts';
-import { Col, Row } from 'antd';
+import { addComponent } from '@/redux/featured/pc-complier-slice';
+import { Button, Col, Row } from 'antd';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 
 
 export function ProductListPage({products}) {
-  const style = {
-    background: '#0092ff',
-    padding: '8px 0',
-  };
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const setProduct = (product) =>{
+    dispatch(addComponent({category:router.query.name,product }))
+    router.push('/pc-builder')
+  }
   return (
     <>
       <Head>
@@ -22,7 +27,11 @@ export function ProductListPage({products}) {
       </h1>
       <div className='container mx-auto grid grid-cols-3 gap-4 mt-8'>
              {
-            products?.map((part)=> <Part part={part} key={part._id}></Part>)
+            products?.map((product)=> <Part part={product} key={product._id}>
+              <Button onClick={()=>setProduct(product)}>
+                Select
+              </Button>
+            </Part>)
           }
       </div>
     </>
@@ -49,7 +58,7 @@ ProductListPage.getLayout = function getLayout(page) {
   
 export async function getServerSideProps(context) {
   
-    const res = await fetch(`http://localhost:3000/api/parts?category=${context.params.name}`)
+    const res = await fetch(`http://localhost:3000/api/parts?category=${context.params.name.replace('-','/')}`)
     const data = await res.json()
     return {
       props: {

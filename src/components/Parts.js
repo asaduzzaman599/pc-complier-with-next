@@ -2,7 +2,7 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/ico
 import { Avatar, Card } from 'antd';
 import { useRouter } from 'next/router';
 const { Meta } = Card;
-const Part = ({part}) => { 
+const Part = ({part, children}) => { 
     const router = useRouter()
     return (
   <Card
@@ -29,6 +29,8 @@ const Part = ({part}) => {
       title="Card title"
       description="This is the description"
     />
+
+    {children}
   </Card>
 );}
 export default Part;
