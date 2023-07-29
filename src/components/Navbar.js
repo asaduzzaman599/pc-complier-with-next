@@ -2,12 +2,14 @@ import { Button, Dropdown, Layout, Menu } from 'antd';
 import Link from 'next/link';
 import { useSession, signOut } from "next-auth/react";
 import { useGetCategoriesQuery } from '@/redux/api/api';
+import { useRouter } from 'next/router';
 const { Header } = Layout;
 
 const Navbar = () => {
+  const router = useRouter()
   const {data} = useGetCategoriesQuery()
-  console.log(data)
   const { data: session } = useSession();
+
 
   const items = data?.result?.map((c,i)=>({
     key:i,
@@ -24,7 +26,7 @@ const Navbar = () => {
       >
         <div className='container mx-auto flex justify-between'>
           
-        <div className="demo-logo" />
+        <Link href={'/'}><h3 className='text-white'>PC Compilers</h3></Link>
         <div className='flex gap-4 items-center'>
           <Dropdown
       menu={{
@@ -35,6 +37,7 @@ const Navbar = () => {
     >
       <Button>Categories</Button>
     </Dropdown>
+    <Button onClick={()=>router.push(`/pc-builder`)} className='bg-white text-black'>Build Your PC</Button>
 
 {session?.user ? (
           <items>

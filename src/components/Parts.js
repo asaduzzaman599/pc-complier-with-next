@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 const { Meta } = Card;
 const Part = ({part, children}) => { 
     const router = useRouter()
+    console.log(part)
     return (
   <Card
     style={{

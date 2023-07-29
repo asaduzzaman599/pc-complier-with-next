@@ -1,10 +1,11 @@
+import Category from '@/components/Category';
 import Part from '@/components/Parts';
 import RootLayouts from '@/layouts/RootLayouts';
 import { Col, Row } from 'antd';
 import Head from 'next/head';
 
 
-export default function HomePage({parts}) {
+export default function HomePage({parts,categories}) {
   const style = {
     background: '#0092ff',
     padding: '8px 0',
@@ -17,12 +18,20 @@ export default function HomePage({parts}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1 style={{color:'black'}}>
-        This is Home Page
+      <h1 style={{color:'black'}} className='text-center my-4'>
+        Features Products
       </h1>
       <div className='container mx-auto grid grid-cols-3 gap-4 mt-8'>
              {
-            parts?.map((part)=> <Part part={part} key={part._id}></Part>)
+            parts?.map(({products})=> <Part part={products} key={products._id}></Part>)
+          }
+      </div>
+      <h1 style={{color:'black'}} className='text-center my-4'>
+        Features Categories
+      </h1>
+      <div className='container mx-auto grid grid-cols-3 gap-4 mt-8'>
+             {
+            categories?.map((category)=> <Category category={category} key={category._id}></Category>)
           }
       </div>
     </>

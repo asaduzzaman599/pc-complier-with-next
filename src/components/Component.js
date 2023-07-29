@@ -1,9 +1,11 @@
+import { addComponent } from '@/redux/featured/pc-complier-slice';
 import { Button } from 'antd';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Component = ({category}) => {
     const router = useRouter()
+    const dispatch = useDispatch()
 
     const state = useSelector(state =>state.pcBuilder)
     console.log(state)
@@ -15,7 +17,7 @@ const Component = ({category}) => {
                 <h3>{category.title}</h3>
                 <h3>{category.title}</h3>
                 {
-                    state[category.title] ? <Button>Remove</Button> : <Button onClick={()=>router.push(`/pc-builder/${category.title.replace('/','-')}`)}>Choose</Button>
+                    state[category.title] ? <Button onClick={()=>dispatch(addComponent({product: null, category: category.title}))}>Remove</Button> : <Button onClick={()=>router.push(`/pc-builder/${category.title.replace('/','-')}`)}>Choose</Button>
                 }
             </div>
            

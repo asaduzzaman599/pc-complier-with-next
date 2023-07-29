@@ -11,7 +11,7 @@ export function ProductListPage({products}) {
   const dispatch = useDispatch()
   const router = useRouter()
   const setProduct = (product) =>{
-    dispatch(addComponent({category:router.query.name,product }))
+    dispatch(addComponent({category:router.query.name.replace('-','/'),product }))
     router.push('/pc-builder')
   }
   return (
