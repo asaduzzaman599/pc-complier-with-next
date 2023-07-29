@@ -6,6 +6,10 @@ export default async function handler(req, res) {
   
 await main()
 const partsCollection = Client.db("pc-compilers").collection('parts')
-  const result = await partsCollection.find().toArray()
+
+const query = {
+  ...(req.query.category? {category:req.query.category}:{})
+} 
+  const result = await partsCollection.find(query).toArray()
   res.status(200).json({ result })
 }

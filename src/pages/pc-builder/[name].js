@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 import Head from 'next/head';
 
 
-export default function HomePage({parts}) {
+export function ProductListPage({products}) {
   const style = {
     background: '#0092ff',
     padding: '8px 0',
@@ -18,36 +18,42 @@ export default function HomePage({parts}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1 style={{color:'black'}}>
-        This is Home Page
+        This is Category Page
       </h1>
       <div className='container mx-auto grid grid-cols-3 gap-4 mt-8'>
              {
-            parts?.map((part)=> <Part part={part} key={part._id}></Part>)
+            products?.map((part)=> <Part part={part} key={part._id}></Part>)
           }
       </div>
     </>
   );
 };
 
-HomePage.getLayout = function getLayout(page) {
+ProductListPage.getLayout = function getLayout(page) {
   return (
     <RootLayouts>{page}</RootLayouts>
   )
 }
 
-export async function getStaticProps() {
-  const res = await fetch('http://localhost:3000/api/parts/featured')
-  const parts = await res.json()
-  
-  const categoriesRes = await fetch('http://localhost:3000/api/categories?limit=6')
-  const categories = await categoriesRes.json()
-  console.log(categories)
-  
-  return {
-    props: {
-      parts:parts.result,
-      categories:categories.result
-    },
-    revalidate: 30
+
+
+
+export default ProductListPage;
+
+
+ProductListPage.getLayout = function getLayout(page) {
+    return (
+      <RootLayouts>{page}</RootLayouts>
+    )
   }
-}
+  
+export async function getServerSideProps(context) {
+  
+    const res = await fetch(`http://localhost:3000/api/parts?category=${context.params.name}`)
+    const data = await res.json()
+    return {
+      props: {
+        products:data.result
+      },
+    }
+  }

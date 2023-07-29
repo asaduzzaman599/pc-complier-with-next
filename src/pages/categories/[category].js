@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 import Head from 'next/head';
 
 
-export default function HomePage({parts}) {
+export default function CategoriesPage({products}) {
   const style = {
     background: '#0092ff',
     padding: '8px 0',
@@ -18,36 +18,49 @@ export default function HomePage({parts}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1 style={{color:'black'}}>
-        This is Home Page
+        This is Category Page
       </h1>
       <div className='container mx-auto grid grid-cols-3 gap-4 mt-8'>
              {
-            parts?.map((part)=> <Part part={part} key={part._id}></Part>)
+            products?.map((part)=> <Part part={part} key={part._id}></Part>)
           }
       </div>
     </>
   );
 };
 
-HomePage.getLayout = function getLayout(page) {
+CategoriesPage.getLayout = function getLayout(page) {
   return (
     <RootLayouts>{page}</RootLayouts>
   )
 }
 
-export async function getStaticProps() {
-  const res = await fetch('http://localhost:3000/api/parts/featured')
-  const parts = await res.json()
+
+
+export async function getStaticPaths() {
+  const res = await fetch('http://localhost:3000/api/categories')
+  const data = await res.json()
+
+ console.log(data)
+  const paths = data.result.map((category) => ({
+    params: { category: category.title},
+  }))
+ 
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+
+export async function getStaticProps(context) {
+  const res = await fetch(`http://localhost:3000/api/parts?category=${context.params.category}`)
+  const products = await res.json()
   
-  const categoriesRes = await fetch('http://localhost:3000/api/categories?limit=6')
-  const categories = await categoriesRes.json()
-  console.log(categories)
   
   return {
     props: {
-      parts:parts.result,
-      categories:categories.result
+      products: products.result,
     },
-    revalidate: 30
   }
 }

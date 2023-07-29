@@ -8,6 +8,7 @@ const Part = ({part}) => {
   <Card
     style={{
       width: 300,
+      margin:'0 auto'
     }}
     cover={
       <img
