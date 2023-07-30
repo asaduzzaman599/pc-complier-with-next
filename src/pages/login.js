@@ -10,7 +10,7 @@ const LoginPage = () => {
            <div className='text-2xl flex gap-2 items-center border border-light-50 cursor-pointer' 
             onClick={() =>
               signIn("github", {
-                callbackUrl: "http://localhost:3000/",
+                callbackUrl: "https://pc-complier.vercel.app/",
               })
             }>
            <GithubOutlined   />

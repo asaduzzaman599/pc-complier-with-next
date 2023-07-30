@@ -16,6 +16,7 @@ const Part = ({part, children}) => {
       <img
         alt="example"
         src={part.image}
+        className='p-6'
       />
     }
     actions={[

@@ -10,7 +10,7 @@ export const authOptions = {
     // ...add more providers here
   ],
   pages:{
-    signIn: '/login'
+    signIn: 'https://pc-complier.vercel.app/login'
   }
 }
 export default NextAuth(authOptions)
