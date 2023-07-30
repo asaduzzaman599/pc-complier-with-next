@@ -1,7 +1,7 @@
 import Part from '@/components/Parts';
 import RootLayouts from '@/layouts/RootLayouts';
-import { Col, Row } from 'antd';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 
 export default function CategoriesPage({products}) {
@@ -9,6 +9,7 @@ export default function CategoriesPage({products}) {
     background: '#0092ff',
     padding: '8px 0',
   };
+  const router = useRouter()
   return (
     <>
       <Head>
@@ -17,10 +18,10 @@ export default function CategoriesPage({products}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1 style={{color:'black'}}>
-        This is Category Page
-      </h1>
-      <div className='container mx-auto grid grid-cols-3 gap-4 mt-8'>
+      <h2 className='text-center my-8 text-3xl text-gray-700'>
+        {router.query.category.replace('-','/')} Category
+      </h2>
+      <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8'>
              {
             products?.map((part)=> <Part part={part} key={part._id}></Part>)
           }
@@ -38,12 +39,12 @@ CategoriesPage.getLayout = function getLayout(page) {
 
 
 export async function getStaticPaths() {
-  const res = await fetch('http://localhost:3000/api/categories')
+  const res = await fetch('https://pc-complier.vercel.app/api/categories')
   const data = await res.json()
 
  console.log(data)
   const paths = data.result.map((category) => ({
-    params: { category: category.title},
+    params: { category: category.title.replace('/','-')},
   }))
  
   return {
@@ -54,7 +55,7 @@ export async function getStaticPaths() {
 
 
 export async function getStaticProps(context) {
-  const res = await fetch(`http://localhost:3000/api/parts?category=${context.params.category}`)
+  const res = await fetch(`https://pc-complier.vercel.app/api/parts?category=${context.params.category.replace('-','/')}`)
   const products = await res.json()
   
   

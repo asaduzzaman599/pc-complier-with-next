@@ -1,7 +1,7 @@
 import Part from '@/components/Parts';
 import RootLayouts from '@/layouts/RootLayouts';
 import { addComponent } from '@/redux/featured/pc-complier-slice';
-import { Button, Col, Row } from 'antd';
+import { Button } from 'antd';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
@@ -22,10 +22,10 @@ export function ProductListPage({products}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1 style={{color:'black'}}>
-        This is Category Page
-      </h1>
-      <div className='container mx-auto grid grid-cols-3 gap-4 mt-8'>
+      <h2 className='text-center my-8 text-3xl text-gray-700'>
+       Select your desired product
+      </h2>
+      <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8'>
              {
             products?.map((product)=> <Part part={product} key={product._id}>
               <Button onClick={()=>setProduct(product)}>
@@ -58,7 +58,7 @@ ProductListPage.getLayout = function getLayout(page) {
   
 export async function getServerSideProps(context) {
   
-    const res = await fetch(`http://localhost:3000/api/parts?category=${context.params.name.replace('-','/')}`)
+    const res = await fetch(`https://pc-complier.vercel.app/api/parts?category=${context.params.name.replace('-','/')}`)
     const data = await res.json()
     return {
       props: {

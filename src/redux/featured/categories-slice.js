@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  categories: []
+  categories: [],
 }
 
 export const categoriesSlice = createSlice({
@@ -11,6 +11,7 @@ export const categoriesSlice = createSlice({
     addComponent: (state,action) => {
      
       state[action.payload.category] = action.payload.product
+
     },
   },
 })

@@ -3,59 +3,71 @@ import Link from 'next/link';
 import { useSession, signOut } from "next-auth/react";
 import { useGetCategoriesQuery } from '@/redux/api/api';
 import { useRouter } from 'next/router';
+import { CloseOutlined,UnorderedListOutlined } from "@ant-design/icons";
+
+import { DownOutlined  } from "@ant-design/icons";
+import { useState } from 'react';
 const { Header } = Layout;
 
 const Navbar = () => {
   const router = useRouter()
   const {data} = useGetCategoriesQuery()
   const { data: session } = useSession();
+  const [isOpen, setIsOpen] = useState()
 
 
   const items = data?.result?.map((c,i)=>({
     key:i,
     label:(
-      <Link href={`/categories/${c.title}`}>
+      <Link href={`/categories/${c.title.replace('/',('-'))}`}>
         {c.title}
       </Link>
     ),
   })) 
 
     return (
-        <Header
-        
-      >
-        <div className='container mx-auto flex justify-between'>
+      <div className='bg-slate-900'>
+        <div className='container mx-auto flex flex-col md:flex-row justify-between p-4 '>
           
-        <Link href={'/'}><h3 className='text-white'>PC Compilers</h3></Link>
-        <div className='flex gap-4 items-center'>
-          <Dropdown
-      menu={{
-        items,
-      }}
-      placement="bottom"
-      arrow
-    >
-      <Button>Categories</Button>
-    </Dropdown>
-    <Button onClick={()=>router.push(`/pc-builder`)} className='bg-white text-black'>Build Your PC</Button>
+        <div className='flex justify-between items-center'>
+          <Link href={'/'}><h3 className='text-white'>PC Compilers</h3></Link>
+          <div className='lg:hidden'>
+          { isOpen ? <CloseOutlined onClick={()=>setIsOpen(!isOpen)}  className='lg:hidden p-6'/>
+          :
+          <UnorderedListOutlined  onClick={()=>setIsOpen(!isOpen)}  className='lg:hidden p-6'/>}
 
-{session?.user ? (
-          <items>
-            <Button onClick={() => signOut()} type="primary" danger>
-              Logout
-            </Button>
-          </items>
-        ) : (
-          <Link
-            style={{ textDecoration: "none", color: "white" }}
-            href="/login"
+          </div>
+        </div>
+        <div className={`${!isOpen ? 'hidden': 'flex'} lg:flex flex-col lg:flex-row gap-4 items-center`}>
+          <Dropdown
+            menu={{
+              items,
+            }}
+            placement="bottom"
+            arrow
+            className='bg-transparent text-white '
           >
-            <items>Login</items>
-          </Link>
-        )}
+            <Button>Categories <DownOutlined /></Button>
+          </Dropdown>
+          <Button onClick={()=>router.push(`/pc-builder`)} className='bg-transparent text-white'>Build Your PC</Button>
+
+          {session?.user ? (
+            <items>
+              <Button onClick={() => signOut()} type="primary" danger>
+                Logout
+              </Button>
+            </items>
+            ) : (
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              href="/login"
+            >
+              <items>Login</items>
+            </Link>
+          )}
         </div>
-        </div>
-      </Header>
+      </div>
+    </div>
     );
 };
 

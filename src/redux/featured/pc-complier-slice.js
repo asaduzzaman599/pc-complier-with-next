@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+  category: {},
+  enabledBuild: false
   
 }
 
@@ -10,7 +12,9 @@ export const pcBuilderSlice = createSlice({
   reducers: {
     addComponent: (state,action) => {
      
-      state[action.payload.category] = action.payload.product
+      state.category[action.payload.category] = action.payload.product
+      
+      state.enabledBuild = state.category && !Object.entries(state.category).find(([k,v])=>k !== 'Others' && !v) && Object.keys(state.category).filter(i=>i !=='Others').length===6
     },
   },
 })

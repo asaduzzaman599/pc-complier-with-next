@@ -1,13 +1,25 @@
 import Component from '@/components/Component';
 import RootLayouts from '@/layouts/RootLayouts';
-import React from 'react';
+import { Button } from 'antd';
+import { useSelector } from 'react-redux';
 
 const PCBuilderPage = ({categories}) => {
+  
+  const state = useSelector(state =>state.pcBuilder)
+  const buildPc = () =>{
+    alert('Your PC Build Completed!')
+  }
     return (
         <div className='container mx-auto'>
             {
                 categories?.map(c=><Component key={c._id} category={c}></Component>)
             }
+
+            <div>
+            <div className='w-full flex justify-center'>
+                    <Button disabled={!state.enabledBuild} onClick={buildPc}>Complete Build</Button>
+                </div>
+            </div>
         </div>
     );
 };
@@ -20,14 +32,14 @@ PCBuilderPage.getLayout = function getLayout(page) {
     )
   }
 
-  
+   
 export async function getServerSideProps() {
   
-    const res = await fetch(`http://localhost:3000/api/categories`)
+    const res = await fetch(`https://pc-complier.vercel.app/api/categories`)
     const data = await res.json()
     return {
       props: {
         categories:data.result
       },
     }
-  }
+  } 

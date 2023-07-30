@@ -1,7 +1,7 @@
+import Banner from '@/components/Banner';
 import Category from '@/components/Category';
 import Part from '@/components/Parts';
 import RootLayouts from '@/layouts/RootLayouts';
-import { Col, Row } from 'antd';
 import Head from 'next/head';
 
 
@@ -18,18 +18,18 @@ export default function HomePage({parts,categories}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1 style={{color:'black'}} className='text-center my-4'>
-        Features Products
-      </h1>
-      <div className='container mx-auto grid grid-cols-3 gap-4 mt-8'>
+      <h2 className='text-center my-8 text-3xl text-gray-700'>
+        Feature Products
+      </h2>
+      <div className='container mx-auto grid grid-cols-14 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8'>
              {
             parts?.map(({products})=> <Part part={products} key={products._id}></Part>)
           }
       </div>
-      <h1 style={{color:'black'}} className='text-center my-4'>
-        Features Categories
-      </h1>
-      <div className='container mx-auto grid grid-cols-3 gap-4 mt-8'>
+      <h2 className='text-center my-8 text-3xl text-gray-700'>
+        Feature Categories
+      </h2>
+      <div className='container mx-auto grid grid-cols-14 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8'>
              {
             categories?.map((category)=> <Category category={category} key={category._id}></Category>)
           }
@@ -40,15 +40,18 @@ export default function HomePage({parts,categories}) {
 
 HomePage.getLayout = function getLayout(page) {
   return (
-    <RootLayouts>{page}</RootLayouts>
+    <RootLayouts>
+      <Banner />
+      {page}
+      </RootLayouts>
   )
 }
 
 export async function getStaticProps() {
-  const res = await fetch('http://localhost:3000/api/parts/featured')
+  const res = await fetch('https://pc-complier.vercel.app/api/parts/featured')
   const parts = await res.json()
   
-  const categoriesRes = await fetch('http://localhost:3000/api/categories?limit=6')
+  const categoriesRes = await fetch('https://pc-complier.vercel.app/api/categories?limit=6')
   const categories = await categoriesRes.json()
   console.log(categories)
   
