@@ -12,7 +12,7 @@ const PCBuilderPage = ({categories}) => {
     return (
         <div className='container mx-auto'>
           <h2 className='text-center my-8 text-3xl text-gray-700'>
-        Build your PC Here
+        Build Your PC Here
       </h2>
             {
                 categories?.map(c=><Component key={c._id} category={c}></Component>)
