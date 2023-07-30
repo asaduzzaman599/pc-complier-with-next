@@ -8,7 +8,7 @@ await main()
 const categoriesCollection = Client.db("pc-compilers").collection('categories')
 const limit = req.query?.limit
   const data = categoriesCollection.find()
-  console.log(data)
+ 
   let result;
   if(limit){
     result = data.limit(+limit)

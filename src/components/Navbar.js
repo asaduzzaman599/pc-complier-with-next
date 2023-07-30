@@ -38,6 +38,22 @@ const Navbar = () => {
 
           </div>
         </div>
+
+
+        <div className={`${!isOpen ? 'hidden': 'flex'} lg:flex flex-col lg:flex-row gap-4 items-center mb-2 lg:mb-0`}>
+        <Link
+              style={{ textDecoration: "none", color: "white" }}
+              href="/"
+            >
+              <items>Home</items>
+            </Link>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              href="/products"
+            >
+              <items>All Products</items>
+            </Link>
+          </div>
         <div className={`${!isOpen ? 'hidden': 'flex'} lg:flex flex-col lg:flex-row gap-4 items-center`}>
           <Dropdown
             menu={{

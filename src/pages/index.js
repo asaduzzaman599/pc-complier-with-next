@@ -53,7 +53,7 @@ export async function getStaticProps() {
   
   const categoriesRes = await fetch('https://pc-complier.vercel.app/api/categories?limit=6')
   const categories = await categoriesRes.json()
-  console.log(categories)
+  
   
   return {
     props: {

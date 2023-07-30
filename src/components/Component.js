@@ -10,7 +10,7 @@ const Component = ({category}) => {
     const dispatch = useDispatch()
 
     const state = useSelector(state =>state.pcBuilder)
-    console.log(state)
+    
     return (
         <div className='w-full text-black border border-gray-300 rounded  py-2 px-10'>
             <div className='w-full flex justify-between p-2 bg-slate-400 text-white rounded'>

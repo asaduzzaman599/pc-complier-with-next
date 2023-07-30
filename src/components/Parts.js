@@ -27,6 +27,7 @@ const Part = ({part, children}) => {
     <Meta
       title={part.productName}
       description={part.category}
+      style={{textAlign:'center'}}
     />
 
     <div className='grid grid-cols-2 gap-4 mt-4 text-center font-semibold'>

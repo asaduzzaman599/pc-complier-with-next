@@ -42,7 +42,6 @@ export async function getStaticPaths() {
   const res = await fetch('https://pc-complier.vercel.app/api/categories')
   const data = await res.json()
 
- console.log(data)
   const paths = data.result.map((category) => ({
     params: { category: category.title.replace('/','-')},
   }))
@@ -63,5 +62,6 @@ export async function getStaticProps(context) {
     props: {
       products: products.result,
     },
+    revalidate: 30
   }
 }
